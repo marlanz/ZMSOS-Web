@@ -1,0 +1,68 @@
+import { imgURL } from "../constants/imgURL";
+
+export const types = [
+  {
+    id: 1,
+    img: imgURL.tiger,
+    scientificName: "Panthera tigris",
+    vietnameseName: "Hổ Đông Dương",
+    englishName: "Indochinese Tiger",
+    family: "Felidae",
+    weightRange: "180-250",
+    characteristics:
+      "Large, muscular big cat with distinctive orange fur and black stripes. Excellent swimmers and climbers.",
+    distribution: "Central Asia, Eastern Asia, Southern Asia",
+    habitat: "Tropical and subtropical moist broadleaf forests",
+    diet: "Large ungulates, including sambar deer, wild boar, and young elephants",
+    reproduction: "3-4 cubs per litter, gestation period of 100-105 days",
+    conservationStatus: "Critically Endangered",
+  },
+  {
+    id: 2,
+    img: imgURL.racoon,
+    scientificName: "Procyon lotor",
+    vietnameseName: "Gấu mèo Bắc Mỹ",
+    englishName: "Common Raccoon",
+    family: "Procyonidae",
+    weightRange: "3.5-9",
+    characteristics:
+      "Medium-sized mammal with distinctive black mask and ringed tail. Highly dexterous front paws.",
+    distribution: "North America, Central America",
+    habitat: "Forests, urban areas, wetlands",
+    diet: "Omnivorous - fruits, nuts, insects, small animals",
+    reproduction: "2-5 kits per litter, gestation period of 63-65 days",
+    conservationStatus: "Least Concern",
+  },
+  {
+    id: 2,
+    img: imgURL.tiger,
+    scientificName: "Procyon lotor",
+    vietnameseName: "Gấu mèo Bắc Mỹ",
+    englishName: "Common Raccoon",
+    family: "Procyonidae",
+    weightRange: "3.5-9",
+    characteristics:
+      "Medium-sized mammal with distinctive black mask and ringed tail. Highly dexterous front paws.",
+    distribution: "North America, Central America",
+    habitat: "Forests, urban areas, wetlands",
+    diet: "Omnivorous - fruits, nuts, insects, small animals",
+    reproduction: "2-5 kits per litter, gestation period of 63-65 days",
+    conservationStatus: "Least Concern",
+  },
+  {
+    id: 2,
+    img: imgURL.racoon,
+    scientificName: "Procyon lotor",
+    vietnameseName: "Gấu mèo Bắc Mỹ",
+    englishName: "Common Raccoon",
+    family: "Procyonidae",
+    weightRange: "3.5-9",
+    characteristics:
+      "Medium-sized mammal with distinctive black mask and ringed tail. Highly dexterous front paws.",
+    distribution: "North America, Central America",
+    habitat: "Forests, urban areas, wetlands",
+    diet: "Omnivorous - fruits, nuts, insects, small animals",
+    reproduction: "2-5 kits per litter, gestation period of 63-65 days",
+    conservationStatus: "Least Concern",
+  },
+];
