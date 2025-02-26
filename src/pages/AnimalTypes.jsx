@@ -17,6 +17,7 @@ import { types } from "../data/types";
 import AnimalTypeCard from "../components/AnimalTypeCard";
 import CloseIcon from "@mui/icons-material/Close";
 import { fetchAllTypes } from "../api/animalTypes";
+import AnimalTypesTbl from "../components/tables/AnimalTypesTbl";
 
 const style = {
   position: "absolute",
@@ -76,6 +77,7 @@ const AnimalTypes = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          marginBottom: "20px",
         }}
       >
         <Typography
@@ -103,30 +105,8 @@ const AnimalTypes = () => {
           Create Type
         </Button>
       </div>
-      <CustomDivider />
-      <div
-        className="animal-list"
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          gap: 35,
-        }}
-      >
-        {types.map((t, index) => (
-          <AnimalTypeCard
-            key={index}
-            scientificName={t.scientificName}
-            vietnameseName={t.vietnameseName}
-            englishName={t.englishName}
-            family={t.family}
-            weightRange={t.weightRange}
-            distribution={t.distribution}
-            img={t.img}
-          />
-        ))}
-      </div>
-
+      {/* <CustomDivider /> */}
+      <AnimalTypesTbl />
       <Modal open={open}>
         <Box sx={style}>
           <div

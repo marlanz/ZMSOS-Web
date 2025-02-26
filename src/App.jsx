@@ -3,41 +3,51 @@ import "./App.css";
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
 import AnimalTypeCard from "./components/AnimalTypeCard";
+import { ConfigProvider } from "antd";
 
 function App() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        // backgroundColor: "#FBFBFF",
+    <ConfigProvider
+      theme={{
+        token: {
+          fontFamily: "Montserrat",
+        },
       }}
     >
-      <Header />
-      <div style={{ display: "flex", marginTop: "78px" }}>
-        <SideBar />
-        <div
-          style={{
-            flex: 1,
-            overflow: "hidden",
-            marginLeft: "260px",
-            marginTop: "20px",
-          }}
-        >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100vh",
+          // backgroundColor: "#FBFBFF",
+          overflow: "hidden",
+        }}
+      >
+        <Header />
+        <div style={{ display: "flex", marginTop: "68px" }}>
+          <SideBar />
           <div
-            className="page"
             style={{
-              padding: "20px 24px",
-              backgroundColor: "white",
-              borderRadius: "10px",
+              flex: 1,
+              overflow: "hidden",
+              marginLeft: "260px",
+              marginTop: "20px",
             }}
           >
-            <Outlet />
+            <div
+              className="page"
+              style={{
+                padding: "20px 24px",
+                backgroundColor: "white",
+                borderRadius: "10px",
+              }}
+            >
+              <Outlet />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ConfigProvider>
     // <AnimalTypeCard />
   );
 }
