@@ -5,6 +5,7 @@ import { IconButton, Typography } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CustomChip from "../CustomChip";
 import { fontFamily } from "../../constants/fontFamily";
+import { styles } from "../../constants/styles";
 
 const AnimalTypesTbl = () => {
   const dataSource = types.map((type) => ({
@@ -25,46 +26,48 @@ const AnimalTypesTbl = () => {
 
   const columns = [
     {
-      title: "Image",
-      dataIndex: "img",
+      title: "ID",
+      dataIndex: "key",
       align: "center",
-      render: (img) => (
-        <img
-          src={img}
-          alt="animal"
-          style={{ width: 70, height: 60, borderRadius: "10px" }}
-        />
-      ),
-      width: 100,
     },
     {
       title: "Scientific Name",
       // dataIndex: "scientificName",
       render: (_, record) => (
-        <div>
-          <Typography
-            variant="body1"
-            color="initial"
-            fontSize={15}
-            fontWeight={600}
-            fontFamily={fontFamily.msr}
-          >
-            {record.scientificName}
-          </Typography>
-          <Typography
-            variant="body1"
-            color="##6B7280"
-            fontSize={14}
-            fontFamily={fontFamily.msr}
-            sx={{
-              width: "250px",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {record.characteristics}
-          </Typography>
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <img
+            src={record.img}
+            alt="animal"
+            style={{ width: 50, height: 50, borderRadius: "10px" }}
+          />
+          <div className="">
+            <Typography
+              variant="body1"
+              color="initial"
+              fontSize={15}
+              fontWeight={600}
+              fontFamily={fontFamily.msr}
+            >
+              {record.scientificName}
+            </Typography>
+            <Typography
+              variant="body1"
+              color={styles.TEXT_SECONDARY}
+              fontSize={14}
+              fontFamily={fontFamily.msr}
+              sx={{
+                width: "250px", // Fixed width
+                display: "-webkit-box", // Required for line-clamp
+                WebkitBoxOrient: "vertical", // Required for line-clamp
+                WebkitLineClamp: 2, // Limit to 2 lines
+                overflow: "hidden", // Hide overflow
+                textOverflow: "ellipsis", // Add ellipsis for overflow
+                whiteSpace: "normal", // Allow text to wrap
+              }}
+            >
+              {record.characteristics}
+            </Typography>
+          </div>
         </div>
       ),
     },

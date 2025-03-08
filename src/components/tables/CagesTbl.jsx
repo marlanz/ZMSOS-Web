@@ -1,5 +1,5 @@
 import { Space, Table } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import { cages } from "../../data/cages";
 import { fontFamily } from "../../constants/fontFamily";
@@ -7,6 +7,9 @@ import CustomChip from "../CustomChip";
 import { IconButton, Typography } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { styles } from "../../constants/styles";
+import CustomPopover from "../CustomPopover";
+import CustomProgressBar from "../CustomProgressBar";
+import { otherConstant } from "../../constants/otherConstant";
 
 const CagesTbl = () => {
   const dataSource = cages.map((c) => ({
@@ -23,50 +26,52 @@ const CagesTbl = () => {
 
   const columns = [
     {
-      title: "Image",
-      dataIndex: "img",
+      title: "ID",
+      dataIndex: "key",
       align: "center",
-      render: (img) => (
-        <img
-          src={img}
-          alt="animal"
-          style={{ width: 70, height: 60, borderRadius: "10px" }}
-        />
-      ),
-      width: 100,
     },
     {
       title: "Cage Name",
       render: (_, record) => (
-        <div>
-          <Typography
-            variant="body1"
-            color="initial"
-            fontSize={15}
-            fontWeight={600}
-            fontFamily={fontFamily.msr}
-          >
-            {record.name}
-          </Typography>
-          <Typography
-            variant="body1"
-            color="##6B7280"
-            fontSize={14}
-            fontFamily={fontFamily.msr}
-            sx={{
-              width: "250px",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {record.desc}
-          </Typography>
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <img
+            src={record.img}
+            alt="animal"
+            style={{ width: 50, height: 50, borderRadius: "10px" }}
+          />
+          <div className="">
+            <Typography
+              variant="body1"
+              color="initial"
+              fontSize={15}
+              fontWeight={600}
+              fontFamily={fontFamily.msr}
+            >
+              {record.name}
+            </Typography>
+            <Typography
+              variant="body1"
+              color={styles.TEXT_SECONDARY}
+              fontSize={14}
+              fontFamily={fontFamily.msr}
+              sx={{
+                width: "250px", // Fixed width
+                display: "-webkit-box", // Required for line-clamp
+                WebkitBoxOrient: "vertical", // Required for line-clamp
+                WebkitLineClamp: 2, // Limit to 2 lines
+                overflow: "hidden", // Hide overflow
+                textOverflow: "ellipsis", // Add ellipsis for overflow
+                whiteSpace: "normal", // Allow text to wrap
+              }}
+            >
+              {record.desc}
+            </Typography>
+          </div>
         </div>
       ),
     },
     {
-      title: "Current Team",
+      title: "Assigned Team",
       dataIndex: "currentTeam",
       align: "center",
       render: (_, record) => (
@@ -106,28 +111,10 @@ const CagesTbl = () => {
             justifyContent: "center",
           }}
         >
-          <div
-            className="progress-bar"
-            style={{
-              width: "50px",
-              height: "7px",
-              backgroundColor: "#e5e7eb",
-              marginLeft: "15px",
-              borderRadius: "10px",
-            }}
-          >
-            <div
-              className="progress"
-              style={{
-                width: record.currentCapacity
-                  ? `${(record.currentCapacity / record.maxCapacity) * 100}%`
-                  : 0,
-                backgroundColor: "#103559",
-                height: "100%",
-                borderRadius: "10px",
-              }}
-            ></div>
-          </div>
+          <CustomProgressBar
+            currentCapacity={record.currentCapacity}
+            maxCapacity={record.maxCapacity}
+          />
           <div className="number">
             {record.currentCapacity}/{record.maxCapacity}
           </div>
@@ -146,42 +133,42 @@ const CagesTbl = () => {
         />
       ),
     },
-
     {
       title: "Action",
       dataIndex: "",
       align: "center",
-      render: () => (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <IconButton>
-            <MoreHorizIcon />
-          </IconButton>
-        </div>
+      render: (_, record) => (
+        <CustomPopover
+          status={record.status}
+          page={otherConstant.CAGES}
+          recordID={record.id}
+        />
       ),
     },
   ];
   return (
-    <Table
-      columns={columns}
-      dataSource={dataSource}
-      pagination={{
-        pageSize: 4,
-      }}
-      components={{
-        body: {
-          row: (props) => (
-            <tr
-              {...props}
-              style={
-                {
-                  // height: styles.TBL_ROW_HEIGHT, // Set the desired row height here
-                }
-              }
-            />
-          ),
-        },
-      }}
-    />
+    <div className="custom-table-container">
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        pagination={{
+          pageSize: 4,
+          position: ["bottomRight"],
+        }}
+        components={{
+          body: {
+            row: (props) => (
+              <tr
+                {...props}
+                style={{
+                  height: styles.TBL_ROW_HEIGHT, // Set the desired row height here
+                }}
+              />
+            ),
+          },
+        }}
+      />
+    </div>
   );
 };
 

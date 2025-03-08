@@ -13,7 +13,7 @@ const Header = () => {
         padding: "15px 40px",
         position: "fixed",
         width: "100%",
-        gap: 650,
+        gap: 710,
         zIndex: 1,
       }}
     >
@@ -24,7 +24,7 @@ const Header = () => {
         <Typography
           variant="body1"
           color="white"
-          fontSize={32}
+          fontSize={28}
           fontWeight={600}
           fontFamily={fontFamily.msr}
         >
@@ -43,7 +43,7 @@ const Header = () => {
         <Typography
           variant="body1"
           color="white"
-          fontSize={17}
+          fontSize={16}
           fontFamily={fontFamily.msr}
         >
           Welcome Manager,{" "}

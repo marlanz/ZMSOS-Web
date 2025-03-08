@@ -2,9 +2,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import { fontFamily } from "../constants/fontFamily";
 import { Button } from "@mui/material";
-import CustomDivider from "../components/CustomDivider";
-import { pets } from "../data/pets";
-import AnimalCard from "../components/AnimalCard";
+import AnimalsTbl from "../components/tables/AnimalsTbl";
 
 const Animals = () => {
   return (
@@ -15,6 +13,7 @@ const Animals = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          marginBottom: "20px",
         }}
       >
         <Typography
@@ -24,7 +23,7 @@ const Animals = () => {
           fontFamily={fontFamily.msr}
           fontWeight={600}
         >
-          Animals Overview
+          Animals
         </Typography>
         <Button
           sx={{
@@ -41,30 +40,7 @@ const Animals = () => {
           Create Animal
         </Button>
       </div>
-      <CustomDivider />
-      <div
-        className="animal-list"
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          gap: 30,
-        }}
-      >
-        {pets.map((p, index) => (
-          <AnimalCard
-            key={index}
-            name={p.name}
-            type={p.type}
-            cage={p.cage}
-            age={p.age}
-            gender={p.gender}
-            weight={p.weight}
-            height={p.height}
-            arriveDate={p.arriveDate}
-          />
-        ))}
-      </div>
+      <AnimalsTbl />
     </div>
   );
 };

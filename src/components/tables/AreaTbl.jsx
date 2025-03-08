@@ -8,6 +8,8 @@ import CustomChip from "../CustomChip";
 import { fontFamily } from "../../constants/fontFamily";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import { styles } from "../../constants/styles";
+import CustomPopover from "../CustomPopover";
+import { otherConstant } from "../../constants/otherConstant";
 
 const directionToRotation = {
   North: 0,
@@ -36,39 +38,47 @@ const AreaTbl = () => {
 
   const columns = [
     {
-      title: "Image",
-      dataIndex: "img",
+      title: "ID",
+      dataIndex: "key",
       align: "center",
-      render: (img) => (
-        <img
-          src={img}
-          alt="animal"
-          style={{ width: 70, height: 60, borderRadius: "10px" }}
-        />
-      ),
-      width: 100,
     },
     {
       title: "Area Name",
       render: (_, record) => (
-        <div>
-          <Typography
-            variant="body1"
-            color="initial"
-            fontSize={15}
-            fontFamily={fontFamily.msr}
-            fontWeight={600}
-          >
-            {record.name}
-          </Typography>
-          <Typography
-            variant="body1"
-            color="##6B7280"
-            fontSize={14}
-            fontFamily={fontFamily.msr}
-          >
-            {record.desc}
-          </Typography>
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <img
+            src={record.img}
+            alt="animal"
+            style={{ width: 50, height: 50, borderRadius: "10px" }}
+          />
+          <div className="">
+            <Typography
+              variant="body1"
+              color="initial"
+              fontSize={15}
+              fontWeight={600}
+              fontFamily={fontFamily.msr}
+            >
+              {record.name}
+            </Typography>
+            <Typography
+              variant="body1"
+              color={styles.TEXT_SECONDARY}
+              fontSize={14}
+              fontFamily={fontFamily.msr}
+              sx={{
+                width: "250px", // Fixed width
+                display: "-webkit-box", // Required for line-clamp
+                WebkitBoxOrient: "vertical", // Required for line-clamp
+                WebkitLineClamp: 2, // Limit to 2 lines
+                overflow: "hidden", // Hide overflow
+                textOverflow: "ellipsis", // Add ellipsis for overflow
+                whiteSpace: "normal", // Allow text to wrap
+              }}
+            >
+              {record.desc}
+            </Typography>
+          </div>
         </div>
       ),
     },
@@ -89,12 +99,13 @@ const AreaTbl = () => {
               transform: `rotate(${directionToRotation[record.direction]}deg)`,
               transition: "transform 0.3s",
             }}
+            fontSize="small"
           />
           <Typography
             variant="body1"
             color="initial"
             fontFamily={fontFamily.msr}
-            fontSize={15}
+            fontSize={14}
             style={{ marginLeft: 8 }}
           >
             {record.direction}
@@ -175,12 +186,12 @@ const AreaTbl = () => {
       title: "Action",
       dataIndex: "",
       align: "center",
-      render: () => (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <IconButton>
-            <MoreHorizIcon />
-          </IconButton>
-        </div>
+      render: (_, record) => (
+        <CustomPopover
+          status={record.status}
+          page={otherConstant.AREA}
+          recordID={record.id}
+        />
       ),
     },
   ];
@@ -196,11 +207,9 @@ const AreaTbl = () => {
           row: (props) => (
             <tr
               {...props}
-              style={
-                {
-                  // height: styles.TBL_ROW_HEIGHT, // Set the desired row height here
-                }
-              }
+              style={{
+                height: styles.TBL_ROW_HEIGHT, // Set the desired row height here
+              }}
             />
           ),
         },

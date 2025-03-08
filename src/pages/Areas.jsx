@@ -1,59 +1,109 @@
-import { Button, Typography } from "@mui/material";
+import { Autocomplete, Button, TextField, Typography } from "@mui/material";
 
 import { fontFamily } from "../constants/fontFamily";
 import AreaTbl from "../components/tables/AreaTbl";
+import { area } from "../data/area";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 const Areas = () => {
   return (
     <div>
+      <Typography
+        variant="body1"
+        color="initial"
+        fontSize={24}
+        fontFamily={fontFamily.msr}
+        fontWeight={600}
+        sx={{ mb: "20px" }}
+      >
+        Areas Overview
+      </Typography>
       <div
-        className="header"
+        className=""
         style={{
           display: "flex",
-          justifyContent: "space-between",
           alignItems: "center",
           marginBottom: "20px",
+          justifyContent: "space-between",
         }}
       >
-        <Typography
-          variant="body1"
-          color="initial"
-          fontSize={24}
-          fontFamily={fontFamily.msr}
-          fontWeight={600}
+        <div
+          className=""
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 15,
+          }}
         >
-          Areas
-        </Typography>
-        <div className="left" style={{ display: "flex", alignItems: "center" }}>
-          {/* <Autocomplete
+          <Autocomplete
             disablePortal
             options={area}
-            sx={{ width: 300 }}
+            sx={{ width: 500 }}
             getOptionLabel={(option) => option.name}
+            renderOption={(props, option) => (
+              <Typography
+                variant="body1"
+                color="initial"
+                {...props}
+                fontFamily={fontFamily.msr}
+              >
+                {option.name}
+              </Typography>
+            )}
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Area"
+                label="Area name"
                 placeholder="Search for an area"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px", // Adjust the border radius value as needed
+                  },
+                  // width: "500px",
+                  "& .MuiInputBase-input": {
+                    fontFamily: fontFamily.msr, // Replace with your desired font family
+                  },
+                  "& .MuiInputLabel-root": {
+                    fontFamily: fontFamily.msr, // Replace with your desired font family
+                  },
+                }}
               />
             )}
-          /> */}
+          />
           <Button
-            // onClick={() => fetchData()}
             sx={{
               fontSize: 15,
               fontFamily: fontFamily.msr,
               textTransform: "none",
-              color: "white",
-              backgroundColor: "#01008A",
+              border: "1px solid #01008A",
+              color: "#01008A",
               borderRadius: "8px",
               padding: "12px 20px",
               fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
             }}
           >
-            Create area
+            <FilterListIcon />
+            Filter
           </Button>
         </div>
+        <Button
+          // onClick={() => fetchData()}
+          sx={{
+            fontSize: 15,
+            fontFamily: fontFamily.msr,
+            textTransform: "none",
+            color: "white",
+            backgroundColor: "#01008A",
+            borderRadius: "8px",
+            padding: "12px 20px",
+            fontWeight: 600,
+          }}
+        >
+          Create area
+        </Button>
       </div>
       <AreaTbl />
     </div>

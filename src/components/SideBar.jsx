@@ -99,7 +99,7 @@ const SideBar = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              padding: "15px 40px",
+              padding: "15px 30px",
               gap: "15px",
               borderRadius: "8px",
               backgroundColor:

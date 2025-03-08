@@ -56,4 +56,15 @@ export const cages = [
     area: "Rainforest Zone",
     imgURL: imgURL.area,
   },
+  {
+    id: 6,
+    name: "Reptile House",
+    desc: "Indoor exhibit with controlled temperature for reptiles.",
+    currentTeam: "Reptile Care Team",
+    maxCapacity: 12,
+    currentCapacity: 7,
+    status: "Open",
+    area: "Rainforest Zone",
+    imgURL: imgURL.area,
+  },
 ];
