@@ -13,15 +13,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const tabs = [
   {
-    name: "Zoo Cages",
-    icon: <FenceIcon />,
-    url: "/zoo-cages",
-  },
-  {
     name: "Areas",
     icon: <ForestIcon />,
     url: "/areas",
   },
+  {
+    name: "Zoo Cages",
+    icon: <FenceIcon />,
+    url: "/zoo-cages",
+  },
+
   {
     name: "Animals",
     icon: <PetsIcon />,
