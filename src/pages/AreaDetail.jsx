@@ -29,6 +29,8 @@ import CustomProgressBar from "../components/CustomProgressBar";
 import { useNavigate } from "react-router-dom";
 import FeedingScheduleTbl from "../components/tables/FeedingScheduleTbl";
 import MaintenanceScheduleTbl from "../components/tables/MaintenanceScheduleTbl";
+import { cages } from "../data/cages";
+import CagesTbl from "../components/tables/CagesTbl";
 
 const animalStatus = {
   Healthy: {
@@ -49,33 +51,7 @@ const animalStatus = {
   },
 };
 
-const teams = [
-  {
-    name: "Emma Thompson",
-    role: "Primary Keeper",
-    contact: "555-0104",
-  },
-  {
-    name: "Emma Thompson",
-    role: "Primary Keeper",
-    contact: "555-0104",
-  },
-  {
-    name: "Emma Thompson",
-    role: "Primary Keeper",
-    contact: "555-0104",
-  },
-];
-
-const features = [
-  "Heated floor",
-  "Climbing structures",
-  "Water feature",
-  "Viewing windows",
-  "Night shelter",
-];
-
-const CageDetail = () => {
+const AreaDetail = () => {
   const navigate = useNavigate();
 
   const dataSource = animals
@@ -211,7 +187,7 @@ const CageDetail = () => {
           }}
         >
           <ArrowBackIosNewIcon fontSize="16px" />
-          Back to Cage List
+          Back to Area List
         </Button>
       </div>
       <div
@@ -249,7 +225,7 @@ const CageDetail = () => {
             fontWeight={600}
             fontSize={20}
           >
-            Lion Enclosure
+            Savana Zones
           </Typography>
           <Typography
             variant="body1"
@@ -258,7 +234,7 @@ const CageDetail = () => {
             fontSize={15}
             sx={{ marginTop: "5px" }}
           >
-            Open-air habitat with rocky terrain for lions.
+            Khu vực phía tây sở thú.
           </Typography>
           <div className="img-list" style={{ marginTop: "10px" }}>
             <CardMedia
@@ -300,17 +276,19 @@ const CageDetail = () => {
                 marginTop: "20px",
               }}
             >
-              <CustomDataPlaceholder name={"ID"} value={"CAGE-01"} />
+              <CustomDataPlaceholder name={"ID"} value={"AREA-01"} />
               <CustomDataPlaceholder
-                name={"Cage Name"}
-                value={"Lion Enclosure"}
+                name={"Area Name"}
+                value={"Savana Zones"}
               />
 
+              <CustomDataPlaceholder name={"Direction"} value={"SouthEast"} />
               <CustomDataPlaceholder
-                name={"Assigned Team"}
-                value={"Big Cat Care Team"}
+                name={"Species Count"}
+                value={"5 species"}
               />
-              <CustomDataPlaceholder name={"Area"} value={"Savana Zones"} />
+
+              <CustomDataPlaceholder name={"Total Area"} value={"5000m²"} />
               <CustomDataPlaceholder
                 name={"Status"}
                 value={
@@ -322,17 +300,17 @@ const CageDetail = () => {
                 }
               />
               <div className="occupancy">
-                <CustomDataPlaceholder name={"Occupancy"} value={"2/10"} />
+                <CustomDataPlaceholder name={"Occupancy"} value={"10/40"} />
                 <CustomProgressBar
-                  currentCapacity={2}
-                  maxCapacity={10}
+                  currentCapacity={10}
+                  maxCapacity={40}
                   width={"100%"}
                   mt={"10px"}
                 />
               </div>
             </div>
           </div>
-          <div
+          {/* <div
             className="size-information"
             style={{
               marginTop: "25px",
@@ -415,52 +393,7 @@ const CageDetail = () => {
                 value={"2024-03-22"}
               />
             </div>
-          </div>
-
-          <div
-            className="size-information"
-            style={{
-              marginTop: "25px",
-              padding: "20px",
-              backgroundColor: "#F9FAFB",
-              borderRadius: "8px",
-            }}
-          >
-            <div
-              className="header"
-              style={{ display: "flex", alignItems: "center", gap: "8px" }}
-            >
-              <SpaIcon />
-              <Typography
-                variant="body1"
-                color="initial"
-                fontFamily={fontFamily.msr}
-                fontSize={16}
-                fontWeight={600}
-              >
-                Features
-              </Typography>
-            </div>
-
-            <div
-              className=""
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "10px",
-                marginTop: "20px",
-              }}
-            >
-              {features.map((f, i) => (
-                <CustomChip
-                  key={i}
-                  title={f}
-                  bgColor={"#EEF2FF"}
-                  color={"#312E81"}
-                />
-              ))}
-            </div>
-          </div>
+          </div> */}
 
           <Button
             sx={{
@@ -499,62 +432,6 @@ const CageDetail = () => {
           className="cage-other-date"
           // style={{ width: "calc(100% - 400px)" }}
         >
-          {/* <div className="environment-monitoring">
-            <div className="">
-              <Typography
-                variant="body1"
-                color="initial"
-                fontFamily={fontFamily.msr}
-                fontSize={16}
-                fontWeight={600}
-              >
-                Environment Monitoring
-              </Typography>
-            </div>
-            <div
-              className=""
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "15px",
-              }}
-            >
-              <CustomEnvironmentalCard
-                icon={<ThermostatIcon />}
-                title={"Temperature"}
-                value={"20°C - 35°C"}
-                lastChecked={"2024-03-14"}
-                status={"Normal"}
-              />
-              <CustomEnvironmentalCard
-                icon={<WaterDropIcon />}
-                title={"Humidity"}
-                value={"30% - 50%"}
-                lastChecked={"2024-03-14"}
-                status={"Normal"}
-              />
-              <CustomEnvironmentalCard
-                icon={<LightModeIcon />}
-                title={"Lighting Schedule"}
-                value={"6:00 AM - 8:00 PM"}
-                lastChecked={"2024-03-14"}
-                status={"Normal"}
-              />
-              <CustomEnvironmentalCard
-                icon={<AirIcon />}
-                title={"Ventilation"}
-                value={
-                  <CustomChip
-                    title={"Normal"}
-                    bgColor={"#10B981"}
-                    color={"white"}
-                  />
-                }
-                // lastChecked={"2024-03-14"}
-                // status={"Normal"}
-              />
-            </div>
-          </div> */}
           <div
             className="current-animals"
             style={{
@@ -570,7 +447,7 @@ const CageDetail = () => {
               fontSize={17}
               fontWeight={600}
             >
-              Current Animals
+              Zoo cages
             </Typography>
             <div
               className=""
@@ -591,7 +468,7 @@ const CageDetail = () => {
               >
                 <Autocomplete
                   disablePortal
-                  options={animals}
+                  options={cages}
                   sx={{ width: 400 }}
                   getOptionLabel={(option) => option.name}
                   renderOption={(props, option) => (
@@ -607,8 +484,8 @@ const CageDetail = () => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="Animal name"
-                      placeholder="Search for an animal name"
+                      label="Cage name"
+                      placeholder="Search for a cage name"
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: "10px", // Adjust the border radius value as needed
@@ -655,74 +532,12 @@ const CageDetail = () => {
                   fontWeight: 600,
                 }}
               >
-                Add Animal
+                Add Cage
               </Button>
             </div>
             <div className="table" style={{ marginTop: " 15px" }}>
-              <Table
-                columns={columns}
-                dataSource={dataSource}
-                pagination={{
-                  pageSize: 3,
-                  position: ["bottomRight"],
-                }}
-                components={{
-                  body: {
-                    row: (props) => (
-                      <tr
-                        {...props}
-                        style={{
-                          height: styles.TBL_ROW_HEIGHT, // Set the desired row height here
-                        }}
-                      />
-                    ),
-                  },
-                }}
-              />
+              <CagesTbl inDetail={true} />
             </div>
-          </div>
-
-          <div
-            className="feeding-schedule"
-            style={{
-              marginTop: "30px",
-              padding: "20px",
-              borderRadius: "8px",
-              border: "1px solid #e5e7eb",
-            }}
-          >
-            <Typography
-              variant="body1"
-              color="initial"
-              fontFamily={fontFamily.msr}
-              fontSize={16}
-              fontWeight={600}
-              sx={{ mb: "20px" }}
-            >
-              Feeding Schedule
-            </Typography>
-            <FeedingScheduleTbl />
-          </div>
-          <div
-            className="up-coming-maintenance"
-            style={{
-              marginTop: "30px",
-              padding: "20px",
-              borderRadius: "8px",
-              border: "1px solid #e5e7eb",
-            }}
-          >
-            <Typography
-              variant="body1"
-              color="initial"
-              fontFamily={fontFamily.msr}
-              fontSize={16}
-              fontWeight={600}
-              sx={{ mb: "20px" }}
-            >
-              Upcoming Maintenance
-            </Typography>
-            <MaintenanceScheduleTbl />
           </div>
         </div>
       </div>
@@ -730,4 +545,4 @@ const CageDetail = () => {
   );
 };
 
-export default CageDetail;
+export default AreaDetail;

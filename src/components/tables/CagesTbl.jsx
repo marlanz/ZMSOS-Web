@@ -11,7 +11,7 @@ import CustomPopover from "../CustomPopover";
 import CustomProgressBar from "../CustomProgressBar";
 import { otherConstant } from "../../constants/otherConstant";
 
-const CagesTbl = () => {
+const CagesTbl = ({ inDetail }) => {
   const dataSource = cages.map((c) => ({
     key: c.id,
     name: c.name,
@@ -23,6 +23,95 @@ const CagesTbl = () => {
     area: c.area,
     img: c.imgURL,
   }));
+
+  const columnsForDetail = [
+    {
+      title: "ID",
+      dataIndex: "key",
+      align: "center",
+    },
+    {
+      title: "Cage Name",
+      render: (_, record) => (
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <img
+            src={record.img}
+            style={{ width: 50, height: 50, borderRadius: "10px" }}
+          />
+          <div className="">
+            <Typography
+              variant="body1"
+              color="initial"
+              fontSize={14}
+              fontWeight={600}
+              fontFamily={fontFamily.msr}
+            >
+              {record.name}
+            </Typography>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Assigned Team",
+      dataIndex: "currentTeam",
+      align: "center",
+      render: (_, record) => (
+        <>
+          {record.currentTeam === "" ? (
+            "N/A"
+          ) : (
+            <div className="chip" style={{ cursor: "pointer" }}>
+              <CustomChip
+                title={record.currentTeam}
+                bgColor={"#EEF2FF"}
+                color={"#312E81"}
+              />
+            </div>
+          )}
+        </>
+      ),
+    },
+
+    {
+      title: "Occupancy",
+      dataIndex: "",
+      align: "center",
+      width: 200,
+      render: (_, record) => (
+        <div
+          className="bar"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <CustomProgressBar
+            currentCapacity={record.currentCapacity}
+            maxCapacity={record.maxCapacity}
+          />
+          <div className="number" style={{ fontSize: "14px" }}>
+            {record.currentCapacity}/{record.maxCapacity}
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      align: "center",
+      render: (_, record) => (
+        <CustomChip
+          title={record.status}
+          bgColor={record.status === "Open" ? "#E6F4EA" : "#FEEAE6"}
+          color={record.status === "Open" ? "#1E4620" : "#8C1D18"}
+        />
+      ),
+    },
+  ];
 
   const columns = [
     {
@@ -142,17 +231,19 @@ const CagesTbl = () => {
           status={record.status}
           page={otherConstant.CAGES}
           recordID={record.id}
+          viewURL={"/zoo-cages/1"}
         />
       ),
     },
   ];
+
   return (
     <div className="custom-table-container">
       <Table
-        columns={columns}
+        columns={inDetail ? columnsForDetail : columns}
         dataSource={dataSource}
         pagination={{
-          pageSize: 4,
+          pageSize: inDetail ? 6 : 4,
           position: ["bottomRight"],
         }}
         components={{

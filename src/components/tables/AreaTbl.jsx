@@ -191,6 +191,7 @@ const AreaTbl = () => {
           status={record.status}
           page={otherConstant.AREA}
           recordID={record.id}
+          viewURL={"/areas/1"}
         />
       ),
     },

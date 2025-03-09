@@ -9,6 +9,7 @@ import Areas from "./pages/Areas.jsx";
 import AnimalTypes from "./pages/AnimalTypes.jsx";
 import Reports from "./pages/Reports.jsx";
 import CageDetail from "./pages/CageDetail.jsx";
+import AreaDetail from "./pages/AreaDetail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/zoo-cages/:id",
         element: <CageDetail />,
+      },
+      {
+        path: "/areas/:id",
+        element: <AreaDetail />,
       },
     ],
   },

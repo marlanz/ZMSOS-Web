@@ -31,7 +31,7 @@ const CustomPopover = ({ status, page, recordID, viewURL }) => {
     {
       name: "View",
       icon: <VisibilityIcon />,
-      url: "/zoo-cages/1",
+      url: viewURL,
     },
     {
       name: "Update",
