@@ -4,6 +4,7 @@ import { fontFamily } from "../constants/fontFamily";
 import AreaTbl from "../components/tables/AreaTbl";
 import { area } from "../data/area";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import { useEffect } from "react";
 
 const Areas = () => {
   return (
@@ -11,10 +12,10 @@ const Areas = () => {
       <Typography
         variant="body1"
         color="initial"
-        fontSize={24}
+        fontSize={22}
         fontFamily={fontFamily.msr}
         fontWeight={600}
-        sx={{ mb: "20px" }}
+        // sx={{ mb: "20px" }}
       >
         Areas Overview
       </Typography>
@@ -23,7 +24,7 @@ const Areas = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          marginBottom: "20px",
+          margin: "15px 0",
           justifyContent: "space-between",
         }}
       >
@@ -61,10 +62,10 @@ const Areas = () => {
                   },
                   // width: "500px",
                   "& .MuiInputBase-input": {
-                    fontFamily: fontFamily.msr, // Replace with your desired font family
+                    // Replace with your desired font family
                   },
                   "& .MuiInputLabel-root": {
-                    fontFamily: fontFamily.msr, // Replace with your desired font family
+                    // Replace with your desired font family
                   },
                 }}
               />
@@ -73,7 +74,7 @@ const Areas = () => {
           <Button
             sx={{
               fontSize: 15,
-              fontFamily: fontFamily.msr,
+
               textTransform: "none",
               border: "1px solid #01008A",
               color: "#01008A",
@@ -93,7 +94,7 @@ const Areas = () => {
           // onClick={() => fetchData()}
           sx={{
             fontSize: 15,
-            fontFamily: fontFamily.msr,
+
             textTransform: "none",
             color: "white",
             backgroundColor: "#01008A",

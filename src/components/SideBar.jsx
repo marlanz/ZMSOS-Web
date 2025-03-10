@@ -68,7 +68,9 @@ const SideBar = () => {
   );
 
   const handleListItemClick = (index) => {
+    window.scrollTo(0, 0);
     setSelectedTab(index);
+
     navigate(tabs[index].url);
   };
 

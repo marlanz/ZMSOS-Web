@@ -177,13 +177,13 @@ const AreaDetail = () => {
             color: "black",
             display: "flex",
             alignItems: "center",
-            fontFamily: fontFamily.msr,
+
             textDecoration: "underline",
             textTransform: "none",
             gap: "8px",
           }}
           onClick={() => {
-            navigate("/zoo-cages");
+            navigate("/areas");
           }}
         >
           <ArrowBackIosNewIcon fontSize="16px" />
@@ -398,7 +398,7 @@ const AreaDetail = () => {
           <Button
             sx={{
               fontSize: 15,
-              fontFamily: fontFamily.msr,
+
               textTransform: "none",
               color: "white",
               backgroundColor: "#01008A",
@@ -414,7 +414,7 @@ const AreaDetail = () => {
           <Button
             sx={{
               fontSize: 15,
-              fontFamily: fontFamily.msr,
+
               textTransform: "none",
               color: "#01008A",
               border: "1px solid #01008A",
@@ -492,10 +492,10 @@ const AreaDetail = () => {
                         },
                         // width: "500px",
                         "& .MuiInputBase-input": {
-                          fontFamily: fontFamily.msr, // Replace with your desired font family
+                          // Replace with your desired font family
                         },
                         "& .MuiInputLabel-root": {
-                          fontFamily: fontFamily.msr, // Replace with your desired font family
+                          // Replace with your desired font family
                         },
                       }}
                     />
@@ -504,7 +504,7 @@ const AreaDetail = () => {
                 <Button
                   sx={{
                     fontSize: 15,
-                    fontFamily: fontFamily.msr,
+
                     textTransform: "none",
                     border: "1px solid #01008A",
                     color: "#01008A",
@@ -523,7 +523,7 @@ const AreaDetail = () => {
               <Button
                 sx={{
                   fontSize: 15,
-                  fontFamily: fontFamily.msr,
+
                   textTransform: "none",
                   color: "white",
                   backgroundColor: "#01008A",

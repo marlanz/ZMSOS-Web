@@ -10,7 +10,7 @@ const Header = () => {
         display: "flex",
         justifyContent: "flex-start",
         alignItems: "center",
-        padding: "15px 40px",
+        padding: "12px 40px",
         position: "fixed",
         width: "100%",
         gap: 710,

@@ -164,7 +164,7 @@ const AnimalDetail = ({ open, handleClose, pet }) => {
               <Button
                 sx={{
                   fontSize: 15,
-                  fontFamily: fontFamily.msr,
+
                   textTransform: "none",
                   color: "#01008A",
                   // backgroundColor: "#01008A",
@@ -394,7 +394,7 @@ const AnimalDetail = ({ open, handleClose, pet }) => {
               sx={{
                 textTransform: "none",
                 fontSize: 16,
-                fontFamily: fontFamily.msr,
+
                 fontWeight: 600,
                 border: "1px solid #01008A",
                 color: "#01008A",
@@ -409,7 +409,7 @@ const AnimalDetail = ({ open, handleClose, pet }) => {
               sx={{
                 textTransform: "none",
                 fontSize: 16,
-                fontFamily: fontFamily.msr,
+
                 fontWeight: 600,
                 // border: "1px solid #01008A",
                 bgcolor: "#01008A",

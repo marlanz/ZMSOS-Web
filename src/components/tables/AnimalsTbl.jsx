@@ -9,20 +9,20 @@ import { styles } from "../../constants/styles";
 
 const animalStatus = {
   Healthy: {
-    bgColor: "#10B981",
-    // color: "#1E4620",
+    bgColor: "rgb(16,185,129,0.08)",
+    color: "#0CA270",
   },
-  "Under Observation": {
-    bgColor: "rgb(77,182,172)",
-    // color: "rgb(77,182,172)",
+  "In Observation": {
+    bgColor: "rgb(77,182,172,0.08)",
+    color: "#2D988E",
   },
   "Needs check-up": {
-    bgColor: "rgb(245, 158, 11)",
-    // color: "rgb(245, 158, 11)",
+    bgColor: "rgb(245, 158, 11,0.08)",
+    color: "#C27A00",
   },
   Quarrantine: {
-    bgColor: "rgb(139,92,246)",
-    // color: "rgb(139,92,246)",
+    bgColor: "rgb(139,92,246,0.08)",
+    color: "#6522FF",
   },
 };
 
@@ -173,7 +173,7 @@ const AnimalsTbl = () => {
         <CustomChip
           title={record.status}
           bgColor={animalStatus[record.status].bgColor}
-          color={"white"}
+          color={animalStatus[record.status].color}
         />
       ),
     },

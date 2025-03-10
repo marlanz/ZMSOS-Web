@@ -11,7 +11,7 @@ const CustomChip = ({ px, py, title, bgColor, border, color }) => {
         py: "5px",
         bgcolor: bgColor,
         fontSize: "13px",
-        fontFamily: fontFamily.msr,
+
         fontWeight: 600,
         color: !color ? "white" : color,
         borderRadius: "15px",

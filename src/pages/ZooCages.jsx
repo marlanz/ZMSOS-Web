@@ -1,20 +1,32 @@
 import { Autocomplete, Button, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { fontFamily } from "../constants/fontFamily";
 import CagesTbl from "../components/tables/CagesTbl";
 import { cages } from "../data/cages";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import AddAnimalType from "../components/modals/AddAnimalType";
+import AnimalDetail from "../components/modals/AnimalDetail";
+import CreateCage from "../components/modals/CreateCage";
 
 const ZooCages = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       <Typography
         variant="body1"
         color="initial"
-        fontSize={24}
+        fontSize={22}
         fontFamily={fontFamily.msr}
         fontWeight={600}
-        sx={{ mb: "20px" }}
       >
         Zoo Cages Overview
       </Typography>
@@ -24,7 +36,7 @@ const ZooCages = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          marginBottom: "20px",
+          margin: "15px 0",
           justifyContent: "space-between",
         }}
       >
@@ -62,10 +74,10 @@ const ZooCages = () => {
                   },
                   // width: "500px",
                   "& .MuiInputBase-input": {
-                    fontFamily: fontFamily.msr, // Replace with your desired font family
+                    // Replace with your desired font family
                   },
                   "& .MuiInputLabel-root": {
-                    fontFamily: fontFamily.msr, // Replace with your desired font family
+                    // Replace with your desired font family
                   },
                 }}
               />
@@ -74,7 +86,7 @@ const ZooCages = () => {
           <Button
             sx={{
               fontSize: 15,
-              fontFamily: fontFamily.msr,
+
               textTransform: "none",
               border: "1px solid #01008A",
               color: "#01008A",
@@ -91,10 +103,10 @@ const ZooCages = () => {
           </Button>
         </div>
         <Button
-          // onClick={() => fetchData()}
+          onClick={() => handleOpenModal()}
           sx={{
             fontSize: 15,
-            fontFamily: fontFamily.msr,
+
             textTransform: "none",
             color: "white",
             backgroundColor: "#01008A",
@@ -107,6 +119,7 @@ const ZooCages = () => {
         </Button>
       </div>
       <CagesTbl />
+      <CreateCage open={open} handleClose={handleCloseModal} />
     </div>
   );
 };

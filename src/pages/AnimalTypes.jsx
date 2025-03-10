@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Box,
   Button,
   FormControl,
@@ -18,6 +19,7 @@ import AnimalTypeCard from "../components/AnimalTypeCard";
 import CloseIcon from "@mui/icons-material/Close";
 import { fetchAllTypes } from "../api/animalTypes";
 import AnimalTypesTbl from "../components/tables/AnimalTypesTbl";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 const style = {
   position: "absolute",
@@ -71,29 +73,84 @@ const AnimalTypes = () => {
   };
   return (
     <div>
+      <Typography
+        variant="body1"
+        color="initial"
+        fontSize={22}
+        fontFamily={fontFamily.msr}
+        fontWeight={600}
+      >
+        Animal Types Overview
+      </Typography>
       <div
-        className="header"
+        className=""
         style={{
           display: "flex",
-          justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "20px",
+          margin: "15px 0",
+          justifyContent: "space-between",
         }}
       >
-        <Typography
-          variant="body1"
-          color="initial"
-          fontSize={24}
-          fontFamily={fontFamily.msr}
-          fontWeight={600}
+        <div
+          className=""
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 15,
+          }}
         >
-          Animal Types Overview
-        </Typography>
+          <Autocomplete
+            disablePortal
+            options={types}
+            sx={{ width: 500 }}
+            getOptionLabel={(option) => option.scientificName}
+            renderOption={(props, option) => (
+              <Typography
+                variant="body1"
+                color="initial"
+                {...props}
+                fontFamily={fontFamily.msr}
+              >
+                {option.scientificName}
+              </Typography>
+            )}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Type name"
+                placeholder="Search for a type "
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px", // Adjust the border radius value as needed
+                  },
+                }}
+              />
+            )}
+          />
+          <Button
+            sx={{
+              fontSize: 15,
+
+              textTransform: "none",
+              border: "1px solid #01008A",
+              color: "#01008A",
+              borderRadius: "8px",
+              padding: "12px 20px",
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <FilterListIcon />
+            Filter
+          </Button>
+        </div>
         <Button
-          onClick={() => fetchData()}
+          // onClick={() => handleOpenModal()}
           sx={{
             fontSize: 15,
-            fontFamily: fontFamily.msr,
+
             textTransform: "none",
             color: "white",
             backgroundColor: "#01008A",
@@ -224,7 +281,7 @@ const AnimalTypes = () => {
                 <Button
                   sx={{
                     fontSize: 15,
-                    fontFamily: fontFamily.msr,
+
                     textTransform: "none",
                     color: "#01008A",
                     // backgroundColor: "#01008A",
@@ -456,7 +513,7 @@ const AnimalTypes = () => {
                 sx={{
                   textTransform: "none",
                   fontSize: 16,
-                  fontFamily: fontFamily.msr,
+
                   fontWeight: 600,
                   border: "1px solid #01008A",
                   color: "#01008A",
@@ -471,7 +528,7 @@ const AnimalTypes = () => {
                 sx={{
                   textTransform: "none",
                   fontSize: 16,
-                  fontFamily: fontFamily.msr,
+
                   fontWeight: 600,
                   // border: "1px solid #01008A",
                   bgcolor: "#01008A",

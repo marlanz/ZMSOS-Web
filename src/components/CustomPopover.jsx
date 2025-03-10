@@ -110,7 +110,7 @@ const CustomPopover = ({ status, page, recordID, viewURL }) => {
               <Button
                 sx={{
                   fontSize: "13px",
-                  fontFamily: fontFamily.msr,
+
                   textTransform: "none",
                   display: "flex",
                   alignItems: "center",

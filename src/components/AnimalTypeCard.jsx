@@ -230,7 +230,7 @@ const AnimalTypeCard = ({
             color: "white",
             fontWeight: 600,
             fontSize: 15,
-            fontFamily: fontFamily.msr,
+
             textTransform: "none",
             width: "100%",
           }}

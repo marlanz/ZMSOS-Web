@@ -222,7 +222,7 @@ const AnimalCard = ({
           color: "white",
           fontWeight: 600,
           fontSize: 15,
-          fontFamily: fontFamily.msr,
+
           textTransform: "none",
         }}
       >
