@@ -1,6 +1,7 @@
-import React from "react";
 
-const AddAnimalType = () => {
+const AddAnimalType = (
+  
+) => {
   return <div>AddAnimalType</div>;
 };
 
