@@ -2,7 +2,7 @@ import React from 'react'
 
 const UpdateAnimalTypeModal = () => {
   return (
-    <div>UpdateAnimalTypeModal</div>
+    <div>UpdateAnimalTypeModal test</div>
   )
 }
 

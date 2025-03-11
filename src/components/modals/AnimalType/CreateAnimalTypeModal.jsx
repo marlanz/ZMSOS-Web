@@ -11,6 +11,7 @@ import SingleImageUpload from "../../form/SingleImageUpload ";
 
 const CreateAnimalTypeModal = ({ open = false, onClose }) => {
   const [image, setImage] = useState(null);
+  
 
   const handleChange = (file) => {
     console.log("Selected file:", file);
