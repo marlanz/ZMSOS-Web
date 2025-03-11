@@ -1,16 +1,16 @@
 import { Table } from "antd";
 
-import { types } from "../../data/types";
 import { IconButton, Typography } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CustomChip from "../CustomChip";
 import { fontFamily } from "../../constants/fontFamily";
 import { styles } from "../../constants/styles";
+import PropTypes from "prop-types";
 
-const AnimalTypesTbl = () => {
-  const dataSource = types.map((type) => ({
+const AnimalTypesTbl = ({ animalTypes, loading }) => {
+  const dataSource = animalTypes.map((type) => ({
     key: type.id,
-    img: type.img,
+    img: type.urlImage,
     scientificName: type.scientificName,
     vietnameseName: type.vietnameseName,
     englishName: type.englishName,
@@ -112,6 +112,7 @@ const AnimalTypesTbl = () => {
 
   return (
     <Table
+      loading={loading}
       columns={columns}
       dataSource={dataSource}
       pagination={{
@@ -119,6 +120,26 @@ const AnimalTypesTbl = () => {
       }}
     />
   );
+};
+AnimalTypesTbl.propTypes = {
+  animalTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      urlImage: PropTypes.string,
+      scientificName: PropTypes.string.isRequired,
+      vietnameseName: PropTypes.string,
+      englishName: PropTypes.string,
+      family: PropTypes.string,
+      weightRange: PropTypes.arrayOf(PropTypes.number),
+      characteristics: PropTypes.string,
+      distribution: PropTypes.string,
+      habitat: PropTypes.string,
+      diet: PropTypes.string,
+      reproduction: PropTypes.string,
+      conservationStatus: PropTypes.string,
+    })
+  ).isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default AnimalTypesTbl;

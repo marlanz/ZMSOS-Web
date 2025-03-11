@@ -4,11 +4,14 @@ import {
   DeleteOutlined,
   EyeOutlined,
   PlusOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons";
-import { message, Upload, Typography, Space, Modal, Button } from "antd";
+import { message, Upload, Typography, Space, Modal, Button, Spin } from "antd";
 import PropTypes from "prop-types";
+import HeadingForm from "./HeadingForm";
+import { uploadSingleToCloudinary } from "../../utils/cloudinary";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 /**
  * SingleImageUpload - A component for selecting and previewing a single image locally
@@ -33,9 +36,10 @@ const SingleImageUpload = ({
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const handleChange = (info) => {
-    console.log("info:::::", info);
     if (info.file.status === "uploading") {
       return;
     }
@@ -46,8 +50,8 @@ const SingleImageUpload = ({
     }
   };
 
-  const beforeUpload = (file) => {
-    console.log("beforeUpload::",file);
+  const beforeUpload = async (file) => {
+    console.log("beforeUpload::", file);
     // Check file type
     const isValidType = fileTypes.includes(file.type);
     if (!isValidType) {
@@ -66,27 +70,51 @@ const SingleImageUpload = ({
       return Upload.LIST_IGNORE;
     }
 
-    // Generate preview
-    getBase64(file).then((url) => {
-      // Preserve the original file properties and add the preview URL
+    try {
+      // Set uploading state
+      setIsUploading(true);
+      
+      // Simulate upload progress
+      const progressInterval = setInterval(() => {
+        setUploadProgress(prev => {
+          const newProgress = prev + Math.floor(Math.random() * 10);
+          return newProgress >= 90 ? 90 : newProgress;
+        });
+      }, 300);
+
+      // Upload the file to Cloudinary using the utility function
+      const secureUrl = await uploadSingleToCloudinary(file);
+
+      // Clear interval and set progress to 100%
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+
       const updatedFile = {
-        name: file.name, 
-        uid: file.uid, 
-        size: file.size, 
+        name: file.name,
+        uid: file.uid,
+        size: file.size,
         type: file.type,
         lastModified: file.lastModified,
-        lastModifiedDate: file.lastModifiedDate, 
-        preview: url,
-        url: url, 
+        lastModifiedDate: file.lastModifiedDate,
+        preview: URL.createObjectURL(file),
+        url: secureUrl, // Use the secure_url 
       };
 
       updatedFile.status = "done";
-      console.log( "when get base 64:::",updatedFile);
-      // Update state
-      setImageFile(updatedFile);
-
-      onChange?.(updatedFile);
-    });
+      
+     
+      setTimeout(() => {
+        setIsUploading(false);
+        setUploadProgress(0);
+        setImageFile(updatedFile);
+        onChange?.(updatedFile); 
+      }, 500);
+      
+    } catch (error) {
+      setIsUploading(false);
+      setUploadProgress(0);
+      message.error(error.message);
+    }
 
     return false;
   };
@@ -102,15 +130,6 @@ const SingleImageUpload = ({
   const handleRemove = () => {
     setImageFile(null);
     onChange?.(null);
-  };
-
-  const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
   };
 
   const uploadProps = {
@@ -130,15 +149,50 @@ const SingleImageUpload = ({
     },
   };
 
-  return (
-    <div className="single-image-upload">
-      {title && (
-        <Title level={5} style={{ marginBottom: 16 }}>
-          {title}
-        </Title>
-      )}
+  // Loading animation antIcon
+  const antIcon = <LoadingOutlined style={{ fontSize: 24, color: "#1890ff" }} spin />;
 
-      {!imageFile ? (
+  // Progress bar styles
+  const progressBarContainerStyle = {
+    width: "100%",
+    height: "8px",
+    backgroundColor: "#f0f0f0",
+    borderRadius: "4px",
+    marginTop: "16px",
+    overflow: "hidden",
+  };
+
+  const progressBarStyle = {
+    height: "100%",
+    width: `${uploadProgress}%`,
+    backgroundColor: "#1890ff",
+    transition: "width 0.3s ease-in-out",
+  };
+
+  return (
+    <div>
+      {title && <HeadingForm text={title} sx={{ marginBottom: "12px" }} />}
+
+      {isUploading ? (
+        <div 
+          style={{
+            border: "1px dashed #d9d9d9",
+            borderRadius: "8px",
+            padding: "40px 20px",
+            textAlign: "center",
+            backgroundColor: "#fafafa",
+          }}
+        >
+          <Space direction="vertical" size={16} style={{ width: "100%" }}>
+            <Spin indicator={antIcon} />
+            <Text>Uploading image to cloud...</Text>
+            <div style={progressBarContainerStyle}>
+              <div style={progressBarStyle}></div>
+            </div>
+            <Text type="secondary">{uploadProgress}% completed</Text>
+          </Space>
+        </div>
+      ) : !imageFile ? (
         <Upload.Dragger {...uploadProps} style={{ padding: "20px 0" }}>
           <Space direction="vertical" size={8} style={{ width: "100%" }}>
             <p className="ant-upload-drag-icon">
@@ -175,7 +229,7 @@ const SingleImageUpload = ({
                 maxHeight: "300px",
                 objectFit: "contain",
                 display: "block",
-                borderRadius:"8px",
+                borderRadius: "8px",
               }}
             />
 

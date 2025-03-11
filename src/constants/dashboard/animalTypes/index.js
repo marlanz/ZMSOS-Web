@@ -10,3 +10,10 @@ export const AnimalTypesText = {
   subHeadingCreateModal:
     "Provide the necessary details for the new type. Ensure accuracy to maintain consistency.",
 };
+export const conservationOptions = [
+  { value: "Least Concern", label: "Least Concern" },
+  { value: "Near Threatened", label: "Near Threatened" },
+  { value: "Vulnerable", label: "Vulnerable" },
+  { value: "Endangered", label: "Endangered" },
+  { value: "Critically Endangered", label: "Critically Endangered" },
+];
