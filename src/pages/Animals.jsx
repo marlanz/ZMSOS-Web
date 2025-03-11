@@ -73,7 +73,6 @@ const Animals = () => {
           <Button
             sx={{
               fontSize: 15,
-
               textTransform: "none",
               border: "1px solid #01008A",
               color: "#01008A",
@@ -93,7 +92,6 @@ const Animals = () => {
           // onClick={() => fetchData()}
           sx={{
             fontSize: 15,
-
             textTransform: "none",
             color: "white",
             backgroundColor: "#01008A",

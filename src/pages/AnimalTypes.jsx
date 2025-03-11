@@ -20,6 +20,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import { fetchAllTypes } from "../api/animalTypes";
 import AnimalTypesTbl from "../components/tables/AnimalTypesTbl";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import Heading from "../components/common/Heading";
+import { AnimalTypesText } from "../constants/dashboard/animalTypes";
+import CustomButton from "../components/common/CustomButton";
+import CustomAutocomplete from "../components/common/CustomAutoCompleteSearch";
+import CreateAnimalTypeModal from "../components/modals/AnimalType/CreateAnimalTypeModal";
 
 const style = {
   position: "absolute",
@@ -34,7 +39,6 @@ const style = {
 
 const AnimalTypes = () => {
   const [open, setOpen] = useState(false);
-
   const [form, setForm] = useState({
     img: "",
     scientificName: "",
@@ -71,17 +75,13 @@ const AnimalTypes = () => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
+
+  const handleSearchChange = () => {};
   return (
     <div>
-      <Typography
-        variant="body1"
-        color="initial"
-        fontSize={22}
-        fontFamily={fontFamily.msr}
-        fontWeight={600}
-      >
-        Animal Types Overview
-      </Typography>
+      {/* HEADING */}
+      <Heading text={AnimalTypesText.heading} />
+      {/* SUB HEADING */}
       <div
         className=""
         style={{
@@ -92,79 +92,41 @@ const AnimalTypes = () => {
         }}
       >
         <div
-          className=""
           style={{
             display: "flex",
             alignItems: "center",
             gap: 15,
           }}
         >
-          <Autocomplete
-            disablePortal
+          {/* AUTO-COMPLETE SEARCH  */}
+          <CustomAutocomplete
             options={types}
-            sx={{ width: 500 }}
-            getOptionLabel={(option) => option.scientificName}
-            renderOption={(props, option) => (
-              <Typography
-                variant="body1"
-                color="initial"
-                {...props}
-                fontFamily={fontFamily.msr}
-              >
-                {option.scientificName}
-              </Typography>
-            )}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Type name"
-                placeholder="Search for a type "
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "10px", // Adjust the border radius value as needed
-                  },
-                }}
-              />
-            )}
+            optionLabelKey="scientificName"
+            fontFamily={fontFamily.msr}
+            onChange={handleSearchChange}
           />
-          <Button
-            sx={{
-              fontSize: 15,
 
-              textTransform: "none",
-              border: "1px solid #01008A",
-              color: "#01008A",
-              borderRadius: "8px",
-              padding: "12px 20px",
-              fontWeight: 600,
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
+          {/* FILTER BUTTON */}
+          <CustomButton
+            filter={true}
+            variant="outlined"
+            startIcon={<FilterListIcon />}
           >
-            <FilterListIcon />
-            Filter
-          </Button>
+            {AnimalTypesText.filter}
+          </CustomButton>
         </div>
-        <Button
-          // onClick={() => handleOpenModal()}
-          sx={{
-            fontSize: 15,
 
-            textTransform: "none",
-            color: "white",
-            backgroundColor: "#01008A",
-            borderRadius: "8px",
-            padding: "12px 20px",
-            fontWeight: 600,
-          }}
-        >
-          Create Type
-        </Button>
+        {/* CREATE ANIMAL TYPE BUTTON */}
+        <CustomButton onClick={handleOpen}>{AnimalTypesText.add}</CustomButton>
       </div>
-      {/* <CustomDivider /> */}
+      {/* TABLE */}
       <AnimalTypesTbl />
-      <Modal open={open}>
+      {/* MODAL */}
+      {/* <CreateAnimalTypeModal onClose={handleClose} open={open} /> */}
+      <Modal
+        open={true}
+        // open={open}
+      >
         <Box sx={style}>
           <div
             className="modal-header"
