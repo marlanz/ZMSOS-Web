@@ -26,7 +26,7 @@ import { Table } from "antd";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import CustomProgressBar from "../components/CustomProgressBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FeedingScheduleTbl from "../components/tables/FeedingScheduleTbl";
 import MaintenanceScheduleTbl from "../components/tables/MaintenanceScheduleTbl";
 import { cages } from "../data/cages";
@@ -54,121 +54,10 @@ const animalStatus = {
 const AreaDetail = () => {
   const navigate = useNavigate();
 
-  const dataSource = animals
-    .filter((a) => a.groupType === "individual")
-    .map((a) => ({
-      key: a.id,
-      name: a.name,
-      desc: a.desc,
-      species: a.species,
-      cage: a.cage,
-      age: a.age,
-      gender: a.gender,
-      weight: a.weight,
-      height: a.height,
-      arriveDate: a.arriveDate,
-      img: a.img,
-      status: a.status,
-    }));
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "key",
-      align: "center",
-    },
-    {
-      title: "Animal Name",
-      // width: 220,
-      render: (_, record) => (
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <img
-            src={record.img}
-            alt="animal"
-            style={{ width: 50, height: 50, borderRadius: "10px" }}
-          />
-          <div className="">
-            <Typography
-              variant="body1"
-              color="initial"
-              fontSize={14}
-              fontWeight={600}
-              fontFamily={fontFamily.msr}
-            >
-              {record.name}
-            </Typography>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "Species",
-      dataIndex: "species",
-      align: "center",
-    },
+  const { id } = useParams();
 
-    {
-      title: "Age",
-      dataIndex: "age",
-      align: "center",
-      // defaultSortOrder: "descend",
-      sorter: (a, b) => a.age - b.age,
-      render: (_, record) => (
-        <Typography
-          variant="body1"
-          color="initial"
-          fontSize={14}
-          fontFamily={fontFamily.msr}
-        >
-          {record.age} years
-        </Typography>
-      ),
-    },
-    {
-      title: "Height",
-      dataIndex: "height",
-      align: "center",
-      sorter: (a, b) => b.height - a.height,
-      render: (_, record) => (
-        <Typography
-          variant="body1"
-          color="initial"
-          fontSize={14}
-          fontFamily={fontFamily.msr}
-        >
-          {record.height} m
-        </Typography>
-      ),
-    },
-    {
-      title: "Weight",
-      dataIndex: "weight",
-      align: "center",
-      sorter: (a, b) => a.weight - b.weight,
-      render: (_, record) => (
-        <Typography
-          variant="body1"
-          color="initial"
-          fontSize={14}
-          fontFamily={fontFamily.msr}
-        >
-          {record.weight} kg
-        </Typography>
-      ),
-    },
+  const [area, setArea] = useState({});
 
-    {
-      title: "Status",
-      dataIndex: "status",
-      align: "center",
-      render: (_, record) => (
-        <CustomChip
-          title={record.status}
-          bgColor={animalStatus[record.status].bgColor}
-          color={"white"}
-        />
-      ),
-    },
-  ];
   return (
     <div style={{}}>
       <div className="back-button">

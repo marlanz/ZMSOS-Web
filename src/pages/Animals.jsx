@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import { fontFamily } from "../constants/fontFamily";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import AnimalsTbl from "../components/tables/AnimalsTbl";
 import { animals } from "../data/animals";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import CreateAnimal from "../components/modals/CreateAnimal";
 
 const Animals = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       <Typography
@@ -16,7 +27,7 @@ const Animals = () => {
         fontFamily={fontFamily.msr}
         fontWeight={600}
       >
-        Animals Overview
+        Danh sách động vật
       </Typography>
       <div
         className=""
@@ -53,8 +64,8 @@ const Animals = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Animal name"
-                placeholder="Search for an animal name"
+                label="Tên thú"
+                placeholder="Tìm kiếm tên thú"
                 sx={{
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "10px", // Adjust the border radius value as needed
@@ -86,11 +97,11 @@ const Animals = () => {
             }}
           >
             <FilterListIcon />
-            Filter
+            Bộ lọc
           </Button>
         </div>
         <Button
-          // onClick={() => fetchData()}
+          onClick={() => handleOpenModal()}
           sx={{
             fontSize: 15,
 
@@ -102,10 +113,11 @@ const Animals = () => {
             fontWeight: 600,
           }}
         >
-          Create cage
+          Tạo thú mới
         </Button>
       </div>
       <AnimalsTbl />
+      <CreateAnimal open={open} handleClose={handleCloseModal} />
     </div>
   );
 };

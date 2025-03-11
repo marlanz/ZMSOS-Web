@@ -30,7 +30,7 @@ const style = {
   borderRadius: "10px",
 };
 
-const CreateCage = ({ open, handleClose, pet }) => {
+const CreateAnimal = ({ open, handleClose, pet }) => {
   const [form, setForm] = useState({
     img: "",
     cageName: "",
@@ -39,7 +39,6 @@ const CreateCage = ({ open, handleClose, pet }) => {
     maxQuantity: "",
     totalSize: "",
     status: "",
-    zooAreaId: null,
   });
 
   const handleChangeForm = (e) => {
@@ -48,15 +47,13 @@ const CreateCage = ({ open, handleClose, pet }) => {
   };
 
   const handleCreateCage = async () => {
-    console.log(form);
-
-    // try {
-    //   const response = await axios.post(`${BASE_URL}/Cage/cages`);
-    //   if (response.message === otherConstant.ADD_CAGE_SUCCESS) {
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const response = await axios.post(`${BASE_URL}/Cage/cages`);
+      if (response.message === otherConstant.ADD_CAGE_SUCCESS) {
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -73,7 +70,7 @@ const CreateCage = ({ open, handleClose, pet }) => {
             fontWeight={600}
             fontSize={22}
           >
-            Create new Cage
+            Create new Animal
           </Typography>
           <IconButton onClick={() => handleClose()}>
             <CloseIcon />
@@ -83,14 +80,14 @@ const CreateCage = ({ open, handleClose, pet }) => {
           variant="body1"
           fontFamily={fontFamily.msr}
           color={styles.TEXT_SECONDARY}
-          fontSize={15}
+          fontSize={14}
         >
           Provide the necessary details for the new cage. Ensure accuracy to
           maintain consistency.
         </Typography>
         <div
           className="modal-content"
-          style={{ marginTop: "24px", height: "550px", overflowY: "scroll" }}
+          style={{ marginTop: "24px", height: "500px", overflowY: "scroll" }}
         >
           <div
             className="key-information"
@@ -206,14 +203,14 @@ const CreateCage = ({ open, handleClose, pet }) => {
                     Cage Status
                   </InputLabel>
                   <Select
-                    value={form.status}
+                    value={form.cageType}
                     label="Cage Status"
                     name="status"
                     onChange={(e) => handleChangeForm(e)}
                     sx={{ borderRadius: "10px", fontFamily: fontFamily.msr }}
                   >
-                    <MenuItem value={5}>Open</MenuItem>
-                    <MenuItem value={6}>Closed</MenuItem>
+                    <MenuItem value={"Open"}>Open</MenuItem>
+                    <MenuItem value={"Closed"}>Closed</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -222,7 +219,7 @@ const CreateCage = ({ open, handleClose, pet }) => {
                 placeholder="Cage Description"
                 name="desc"
                 label="Cage Description"
-                value={form.desc}
+                value={form.cageName}
                 onChange={(e) => handleChangeForm(e)}
                 sx={{
                   "& .MuiOutlinedInput-root": {
@@ -245,6 +242,29 @@ const CreateCage = ({ open, handleClose, pet }) => {
               Cage Assignment
             </Typography>
             <div className="area-team" style={{ display: "flex", gap: 12 }}>
+              <Autocomplete
+                disablePortal
+                options={cages}
+                sx={{ width: 500 }}
+                getOptionLabel={(option) => option.currentTeam}
+                renderOption={(props, option) => (
+                  <Typography variant="body1" color="initial" {...props}>
+                    {option.currentTeam}
+                  </Typography>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Team name"
+                    placeholder="Search for a team "
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        borderRadius: "10px", // Adjust the border radius value as needed
+                      },
+                    }}
+                  />
+                )}
+              />
               <Autocomplete
                 disablePortal
                 options={cages}
@@ -347,4 +367,4 @@ const CreateCage = ({ open, handleClose, pet }) => {
   );
 };
 
-export default CreateCage;
+export default CreateAnimal;

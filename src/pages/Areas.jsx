@@ -4,9 +4,20 @@ import { fontFamily } from "../constants/fontFamily";
 import AreaTbl from "../components/tables/AreaTbl";
 import { area } from "../data/area";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import CreateArea from "../components/modals/CreateArea";
 
 const Areas = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       <Typography
@@ -91,7 +102,7 @@ const Areas = () => {
           </Button>
         </div>
         <Button
-          // onClick={() => fetchData()}
+          onClick={() => handleOpenModal()}
           sx={{
             fontSize: 15,
 
@@ -107,6 +118,7 @@ const Areas = () => {
         </Button>
       </div>
       <AreaTbl />
+      <CreateArea open={open} handleClose={handleCloseModal} />
     </div>
   );
 };
