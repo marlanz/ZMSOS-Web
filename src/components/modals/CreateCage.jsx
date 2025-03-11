@@ -248,7 +248,7 @@ const CreateCage = ({ open, handleClose, pet }) => {
               <Autocomplete
                 disablePortal
                 options={cages}
-                sx={{ width: 500 }}
+                sx={{ width: "100%" }}
                 getOptionLabel={(option) => option.area}
                 renderOption={(props, option) => (
                   <Typography variant="body1" color="initial" {...props}>

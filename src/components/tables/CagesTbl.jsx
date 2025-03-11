@@ -11,8 +11,8 @@ import CustomPopover from "../CustomPopover";
 import CustomProgressBar from "../CustomProgressBar";
 import { otherConstant } from "../../constants/otherConstant";
 
-const CagesTbl = ({ inDetail }) => {
-  const dataSource = cages.map((c) => ({
+const CagesTbl = ({ inDetail, data }) => {
+  const dataSource = data.map((c) => ({
     key: c.id,
     name: c.name,
     desc: c.desc,
@@ -246,6 +246,7 @@ const CagesTbl = ({ inDetail }) => {
           pageSize: inDetail ? 6 : 4,
           position: ["bottomRight"],
         }}
+        style={{ width: inDetail && "800px" }}
         components={{
           body: {
             row: (props) => (

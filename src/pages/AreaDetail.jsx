@@ -5,7 +5,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import CustomChip from "../components/CustomChip";
 import { fontFamily } from "../constants/fontFamily";
@@ -31,23 +31,18 @@ import FeedingScheduleTbl from "../components/tables/FeedingScheduleTbl";
 import MaintenanceScheduleTbl from "../components/tables/MaintenanceScheduleTbl";
 import { cages } from "../data/cages";
 import CagesTbl from "../components/tables/CagesTbl";
+import axios from "axios";
+import { BASE_URL } from "../constants/otherConstant";
 
-const animalStatus = {
-  Healthy: {
-    bgColor: "#10B981",
-    // color: "#1E4620",
+const areaStatus = {
+  Open: {
+    bgColor: "rgb(16,185,129,0.08)",
+    color: "#0CA270",
   },
-  "In Observation": {
-    bgColor: "rgb(77,182,172)",
-    // color: "rgb(77,182,172)",
-  },
-  "Needs check-up": {
-    bgColor: "rgb(245, 158, 11)",
-    // color: "rgb(245, 158, 11)",
-  },
-  Quarrantine: {
-    bgColor: "rgb(139,92,246)",
-    // color: "rgb(139,92,246)",
+
+  Close: {
+    bgColor: "rgb(153,157,164,0.1)",
+    color: "#727272",
   },
 };
 
@@ -57,6 +52,39 @@ const AreaDetail = () => {
   const { id } = useParams();
 
   const [area, setArea] = useState({});
+
+  const [cages, setCages] = useState([]);
+
+  useEffect(() => {
+    const fetchCages = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/Cage/cages/zooAreaId?zooAreaId=${id}`
+        );
+        if (response.status === 200) {
+          setCages(response.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const fetchAreaDetail = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/ZooArea/zooArea/id?id=${id}`
+        );
+        if (response.status === 200) {
+          setArea(response.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchAreaDetail();
+    fetchCages();
+  }, [id]);
 
   return (
     <div style={{}}>
@@ -103,9 +131,13 @@ const AreaDetail = () => {
               fontWeight={600}
               fontSize={14}
             >
-              ID: 1
+              ID: {id}
             </Typography>
-            <CustomChip title={"Open"} bgColor={"#E6F4EA"} color={"#1E4620"} />
+            <CustomChip
+              title={area.status?.name}
+              bgColor={areaStatus[area.status?.name]?.bgColor}
+              color={areaStatus[area.status?.name]?.color}
+            />
           </div>
           <Typography
             variant="body1"
@@ -114,7 +146,7 @@ const AreaDetail = () => {
             fontWeight={600}
             fontSize={20}
           >
-            Savana Zones
+            {area?.name}
           </Typography>
           <Typography
             variant="body1"
@@ -123,12 +155,12 @@ const AreaDetail = () => {
             fontSize={15}
             sx={{ marginTop: "5px" }}
           >
-            Khu vực phía tây sở thú.
+            {area?.description}
           </Typography>
           <div className="img-list" style={{ marginTop: "10px" }}>
             <CardMedia
               component={"img"}
-              src={imgURL.area}
+              src={area?.urlImages?.[0]}
               sx={{ width: "100%", height: "250px", borderRadius: "8px" }}
             />
           </div>
@@ -165,26 +197,29 @@ const AreaDetail = () => {
                 marginTop: "20px",
               }}
             >
-              <CustomDataPlaceholder name={"ID"} value={"AREA-01"} />
-              <CustomDataPlaceholder
-                name={"Area Name"}
-                value={"Savana Zones"}
-              />
+              <CustomDataPlaceholder name={"ID"} value={id} />
+              <CustomDataPlaceholder name={"Area Name"} value={area?.name} />
 
-              <CustomDataPlaceholder name={"Direction"} value={"SouthEast"} />
+              <CustomDataPlaceholder
+                name={"Direction"}
+                value={area?.location}
+              />
               <CustomDataPlaceholder
                 name={"Species Count"}
                 value={"5 species"}
               />
 
-              <CustomDataPlaceholder name={"Total Area"} value={"5000m²"} />
+              <CustomDataPlaceholder
+                name={"Total Area"}
+                value={`${area?.size}m²`}
+              />
               <CustomDataPlaceholder
                 name={"Status"}
                 value={
                   <CustomChip
-                    title={"Open"}
-                    bgColor={"#E6F4EA"}
-                    color={"#1E4620"}
+                    title={area.status?.name}
+                    bgColor={areaStatus[area.status?.name]?.bgColor}
+                    color={areaStatus[area.status?.name]?.color}
                   />
                 }
               />
@@ -298,7 +333,7 @@ const AreaDetail = () => {
               marginTop: "30px",
             }}
           >
-            Edit Cage
+            Edit Area
           </Button>
           <Button
             sx={{
@@ -425,7 +460,7 @@ const AreaDetail = () => {
               </Button>
             </div>
             <div className="table" style={{ marginTop: " 15px" }}>
-              <CagesTbl inDetail={true} />
+              <CagesTbl inDetail={true} data={cages} />
             </div>
           </div>
         </div>

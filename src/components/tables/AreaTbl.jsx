@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { area } from "../../data/area";
 import { FreeBreakfast } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
@@ -10,6 +10,7 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import { styles } from "../../constants/styles";
 import CustomPopover from "../CustomPopover";
 import { otherConstant } from "../../constants/otherConstant";
+import { getAllAreas } from "../../api/area";
 
 const directionToRotation = {
   North: 0,
@@ -23,17 +24,32 @@ const directionToRotation = {
 };
 
 const AreaTbl = () => {
-  const dataSource = area.map((a) => ({
+  const [areas, setAreas] = useState([]);
+
+  useEffect(() => {
+    const fetchAreas = async () => {
+      try {
+        const data = await getAllAreas();
+        setAreas(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchAreas();
+  }, []);
+
+  const dataSource = areas.map((a) => ({
     key: a.id,
-    img: a.imgURL,
-    name: a.name,
-    desc: a.desc,
-    direction: a.direction,
-    maxOccupancy: a.maxOccupancy,
-    currentOccupancy: a.currentOccupancy,
-    species: a.species,
-    speciesList: a.speciesList,
-    status: a.status,
+    img: a?.urlImages?.[0],
+    name: a?.name,
+    desc: a?.description,
+    direction: a?.location,
+    // maxOccupancy: a.maxOccupancy,
+    // currentOccupancy: a.currentOccupancy,
+    species: a?.animalOrder,
+    // speciesList: a.speciesList,
+    status: a?.status?.name,
   }));
 
   const columns = [

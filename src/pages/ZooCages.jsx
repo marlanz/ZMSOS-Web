@@ -118,7 +118,7 @@ const ZooCages = () => {
           Create cage
         </Button>
       </div>
-      <CagesTbl />
+      <CagesTbl data={cages} />
       <CreateCage open={open} handleClose={handleCloseModal} />
     </div>
   );

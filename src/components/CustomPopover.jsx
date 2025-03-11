@@ -48,6 +48,8 @@ const CustomPopover = ({ status, page, recordID, viewURL }) => {
 
   const handleCloseCage = (id) => {};
 
+  const handleDeleteArea = (id) => {};
+
   const areaActions =
     page === otherConstant.AREA && status === "Open"
       ? [
@@ -57,6 +59,11 @@ const CustomPopover = ({ status, page, recordID, viewURL }) => {
             icon: <BlindsIcon />,
             action: handleCloseCage(recordID),
           },
+          {
+            name: "Delete area",
+            icon: <DeleteIcon />,
+            action: handleDeleteArea(recordID),
+          },
         ]
       : [
           ...baseActions,
@@ -64,6 +71,11 @@ const CustomPopover = ({ status, page, recordID, viewURL }) => {
             name: "Open area",
             icon: <BlindsClosedIcon />,
             action: handleCloseCage(recordID),
+          },
+          {
+            name: "Delete area",
+            icon: <DeleteIcon />,
+            action: handleDeleteArea(recordID),
           },
         ];
 
