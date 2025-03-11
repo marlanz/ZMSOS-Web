@@ -18,6 +18,7 @@ import { styles } from "../../constants/styles";
 import { cages } from "../../data/cages";
 import axios from "axios";
 import { BASE_URL, otherConstant } from "../../constants/otherConstant";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -30,16 +31,16 @@ const style = {
   borderRadius: "10px",
 };
 
-const CreateCage = ({ open, handleClose, pet }) => {
+const CreateArea = ({ open, handleClose, pet }) => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     img: "",
-    cageName: "",
-    cageType: "",
+    areaName: "",
+    location: "",
     desc: "",
-    maxQuantity: "",
+    animalOrder: "",
     totalSize: "",
     status: "",
-    zooAreaId: null,
   });
 
   const handleChangeForm = (e) => {
@@ -47,16 +48,27 @@ const CreateCage = ({ open, handleClose, pet }) => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleCreateCage = async () => {
-    console.log(form);
+  const handleCreateArea = async () => {
+    const body = {
+      name: form.areaName,
+      description: form.desc,
+      animalOrder: form.animalOrder,
+      location: form.location,
+      size: form.totalSize,
+      urlImages: [form.img],
+      statusId: form.status,
+    };
+    try {
+      const response = await axios.post(`${BASE_URL}/ZooArea/zooArea`, body);
+      console.log(response.data.data.id);
+      navigate(`/areas/${response.data.data.id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    // try {
-    //   const response = await axios.post(`${BASE_URL}/Cage/cages`);
-    //   if (response.message === otherConstant.ADD_CAGE_SUCCESS) {
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+  const handleLogForm = () => {
+    console.log(form);
   };
 
   return (
@@ -73,7 +85,7 @@ const CreateCage = ({ open, handleClose, pet }) => {
             fontWeight={600}
             fontSize={22}
           >
-            Create new Cage
+            Create new Area
           </Typography>
           <IconButton onClick={() => handleClose()}>
             <CloseIcon />
@@ -83,15 +95,12 @@ const CreateCage = ({ open, handleClose, pet }) => {
           variant="body1"
           fontFamily={fontFamily.msr}
           color={styles.TEXT_SECONDARY}
-          fontSize={15}
+          fontSize={14}
         >
           Provide the necessary details for the new cage. Ensure accuracy to
           maintain consistency.
         </Typography>
-        <div
-          className="modal-content"
-          style={{ marginTop: "24px", height: "550px", overflowY: "scroll" }}
-        >
+        <div className="modal-content" style={{ marginTop: "24px" }}>
           <div
             className="key-information"
             // style={{ display: "flex", flexDirection: "column", gap: "16px" }}
@@ -113,10 +122,10 @@ const CreateCage = ({ open, handleClose, pet }) => {
               <div className="" style={{ display: "flex", gap: 12 }}>
                 <TextField
                   id=""
-                  placeholder="Cage Name"
-                  name="cageName"
-                  label="Cage Name"
-                  value={form.cageName}
+                  placeholder="Area Name"
+                  name="areaName"
+                  label="Area Name"
+                  value={form.areaName}
                   onChange={(e) => handleChangeForm(e)}
                   sx={{
                     "& .MuiOutlinedInput-root": {
@@ -127,17 +136,23 @@ const CreateCage = ({ open, handleClose, pet }) => {
                 />
                 <FormControl sx={{ width: "50%" }}>
                   <InputLabel id="demo-simple-select-label">
-                    Cage Type
+                    Area Location
                   </InputLabel>
                   <Select
-                    value={form.cageType}
-                    label="Cage Type"
-                    name="cageType"
+                    value={form.location}
+                    label="Area Location"
+                    name="location"
                     onChange={(e) => handleChangeForm(e)}
                     sx={{ borderRadius: "10px", fontFamily: fontFamily.msr }}
                   >
-                    <MenuItem value={"Individual"}>Individual Animals</MenuItem>
-                    <MenuItem value={"Flock"}>Group</MenuItem>
+                    <MenuItem value={"North"}>North</MenuItem>
+                    <MenuItem value={"NorthEast"}>NorthEast</MenuItem>
+                    <MenuItem value={"East"}>East</MenuItem>
+                    <MenuItem value={"SouthEast"}>SouthEast</MenuItem>
+                    <MenuItem value={"South"}>South</MenuItem>
+                    <MenuItem value={"SouthWest"}>SouthWest</MenuItem>
+                    <MenuItem value={"West"}>West</MenuItem>
+                    <MenuItem value={"NorthWest"}>NorthWest</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -189,10 +204,10 @@ const CreateCage = ({ open, handleClose, pet }) => {
               >
                 <TextField
                   id=""
-                  placeholder="Max capacity"
-                  name="maxQuantity"
-                  label="Max capacity"
-                  value={form.maxQuantity}
+                  placeholder="Animal Order"
+                  name="animalOrder"
+                  label="Animal Order"
+                  value={form.animalOrder}
                   onChange={(e) => handleChangeForm(e)}
                   sx={{
                     "& .MuiOutlinedInput-root": {
@@ -203,11 +218,11 @@ const CreateCage = ({ open, handleClose, pet }) => {
                 />
                 <FormControl sx={{ width: "50%" }}>
                   <InputLabel id="demo-simple-select-label">
-                    Cage Status
+                    Area Status
                   </InputLabel>
                   <Select
                     value={form.status}
-                    label="Cage Status"
+                    label="Area Status"
                     name="status"
                     onChange={(e) => handleChangeForm(e)}
                     sx={{ borderRadius: "10px", fontFamily: fontFamily.msr }}
@@ -219,9 +234,9 @@ const CreateCage = ({ open, handleClose, pet }) => {
               </div>
               <TextField
                 id=""
-                placeholder="Cage Description"
+                placeholder="Area Description"
                 name="desc"
-                label="Cage Description"
+                label="Area Description"
                 value={form.desc}
                 onChange={(e) => handleChangeForm(e)}
                 sx={{
@@ -233,7 +248,7 @@ const CreateCage = ({ open, handleClose, pet }) => {
               />
             </div>
           </div>
-          <div className="classification" style={{ marginTop: "22px" }}>
+          {/* <div className="classification" style={{ marginTop: "22px" }}>
             <Typography
               variant="body1"
               color="initial"
@@ -249,17 +264,17 @@ const CreateCage = ({ open, handleClose, pet }) => {
                 disablePortal
                 options={cages}
                 sx={{ width: "100%" }}
-                getOptionLabel={(option) => option.area}
+                getOptionLabel={(option) => option.currentTeam}
                 renderOption={(props, option) => (
                   <Typography variant="body1" color="initial" {...props}>
-                    {option.area}
+                    {option.currentTeam}
                   </Typography>
                 )}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Area name"
-                    placeholder="Search for an area "
+                    label="Team name"
+                    placeholder="Search for a team "
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         borderRadius: "10px", // Adjust the border radius value as needed
@@ -269,7 +284,7 @@ const CreateCage = ({ open, handleClose, pet }) => {
                 )}
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="size-information" style={{ marginTop: "22px" }}>
             <Typography
@@ -336,9 +351,9 @@ const CreateCage = ({ open, handleClose, pet }) => {
                 borderRadius: "10px",
                 p: "12px 40px",
               }}
-              onClick={() => handleCreateCage()}
+              onClick={() => handleCreateArea()}
             >
-              Create Cage
+              Create Area
             </Button>
           </div>
         </div>
@@ -347,4 +362,4 @@ const CreateCage = ({ open, handleClose, pet }) => {
   );
 };
 
-export default CreateCage;
+export default CreateArea;
