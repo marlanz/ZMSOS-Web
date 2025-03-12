@@ -7,7 +7,6 @@ import baseApi from "./BaseApi";
  * @returns {*} The data from the response
  */
 const responseBody = (response) => response.data;
-console.log("baseApi:", baseApi);
 
 const requests = {
   baseApiGet: (url, params) => baseApi.get(url, { params }).then(responseBody),
